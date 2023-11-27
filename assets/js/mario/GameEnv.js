@@ -7,12 +7,18 @@ export class GameEnv {
     static innerHeight;
     static top;
     static bottom;
-    static prevBottom;
+    static prevBottom
+    static floor;
+    static prevFloor;
     static gameSpeed;
     static gravity;
+    static currentLevel;
+    static player;
+
+    static backgroundHeight = 0;
+    static platformHeight = 0;
 
     static isInverted = true;
-    static defaultFilter = getComputedStyle(document.documentElement).getPropertyValue('--default-canvas-filter');
 
     // Make the constructor private to prevent instantiation
     constructor() {
@@ -38,25 +44,33 @@ export class GameEnv {
 
     // Setter for Bottom position
     static setBottom() {
-        // set bottom of game as background height
-        const background = document.querySelector('#background');
-        if (background) {
-            this.bottom = background.offsetHeight;
-        }
+        // sets the bottom or gravity 0
+        this.bottom =
+        this.backgroundHeight;
     }
+
+    static setFloor() {
+        // sets the bottom or gravity 0
+        this.floor =
+        this.backgroundHeight - this.platformHeight > this.top?
+        this.backgroundHeight - this.platformHeight:
+        this.backgroundHeight;
+    }
+
     
     // Setup for Game Environment 
     static initialize() {
         // store previous for ratio calculatins on resize
         this.prevInnerWidth = this.innerWidth;
         this.prevBottom = this.bottom;
+        this.prevFloor = this.floor;
     
         // game uses available width and heith
         this.innerWidth = window.innerWidth;
         this.innerHeight = window.innerHeight;
 
         this.setTop();
-        // this.setBottom() is ignored for now as resize of background object determinse bottom
+        //this.setBottom(); // must be called in platformer objects
     }
 
     // Resize for Game Objects
@@ -83,7 +97,7 @@ export class GameEnv {
             if (gameObj.invert && this.isInverted) {  // toggle off
                 gameObj.canvas.style.filter = "none";  // remove filter
             } else if (gameObj.invert) { // toggle on
-                gameObj.canvas.style.filter = this.defaultFilter;  // remove filter
+                gameObj.canvas.style.filter = "invert(100%)";  // remove filter
             } else {
                 gameObj.canvas.style.filter = "none";  // remove filter
             }

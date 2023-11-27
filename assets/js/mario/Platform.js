@@ -1,7 +1,7 @@
 import GameEnv from './GameEnv.js';
 import GameObject from './GameObject.js';
 
-export class Background extends GameObject {
+export class Platform extends GameObject {
     constructor(canvas, image, speedRatio) {
         super(canvas, image, speedRatio);
     }
@@ -31,24 +31,25 @@ export class Background extends GameObject {
     */ 
     size() {
         // Update canvas size
-        const ADJUST = 1 // visual layer adjust; alien_planet.jpg: 1.42, try 1 for others
+        const ADJUST = 0.2
 
         const canvasWidth = GameEnv.innerWidth;
         const canvasHeight = canvasWidth / this.aspect_ratio;
-        GameEnv.backgroundHeight = canvasHeight;
         const canvasLeft = 0;
+        GameEnv.platformHeight = canvasHeight * ADJUST;
+    
 
-        this.canvas.width = this.width / ADJUST;
+        this.canvas.width = this.width;
         this.canvas.height = this.height / ADJUST;
         this.canvas.style.width = `${canvasWidth}px`;
         this.canvas.style.height = `${canvasHeight}px`;
         this.canvas.style.position = 'absolute';
+        this.canvas.style.top = `${GameEnv.bottom}px`; 
         this.canvas.style.left = `${canvasLeft}px`;
-        this.canvas.style.top = `${GameEnv.top}px`;
 
         // set bottom of game to new background height
-        GameEnv.setBottom(); 
+        GameEnv.setFloor();
     }
 }
 
-export default Background;
+export default Platform;
