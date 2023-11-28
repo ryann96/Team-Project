@@ -1,0 +1,251 @@
+---
+title: Code Climbers!
+layout:
+image: 
+platform: /images/road.png
+sprite: 
+permalink: /game3/
+---
+{% assign roadImage = site.baseurl | append: page.road %}
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+
+  <title>CodeClimbers</title>
+  
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.container {
+  max-width: 1050px;
+  width: 90%;
+  margin: auto;
+}
+
+.navbar {
+  width: 100%;
+  box-shadow: 0 1px 4px rgba(255, 255, 255, 0.15);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 62px;
+}
+
+.navbar .menu-items {
+  display: flex;
+}
+
+.navbar .nav-container li {
+  list-style: none;
+}
+
+.navbar .nav-container a {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 1.2rem;
+  padding: 0.7rem;
+}
+
+.navbar .nav-container a:hover{
+    font-weight: bolder;
+}
+
+.nav-container {
+  display: block;
+  position: relative;
+  height: 60px;
+}
+
+.nav-container .checkbox {
+  position: absolute;
+  display: block;
+  height: 32px;
+  width: 32px;
+  top: 20px;
+  left: 20px;
+  z-index: 5;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.nav-container .hamburger-lines {
+  display: block;
+  height: 26px;
+  width: 32px;
+  position: absolute;
+  top: 17px;
+  left: 20px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.nav-container .hamburger-lines .line {
+  display: block;
+  height: 4px;
+  width: 100%;
+  border-radius: 10px;
+  background: #0e2431;
+}
+
+.nav-container .hamburger-lines .line1 {
+  transform-origin: 0% 0%;
+  transition: transform 0.4s ease-in-out;
+}
+
+.nav-container .hamburger-lines .line2 {
+  transition: transform 0.2s ease-in-out;
+}
+
+.nav-container .hamburger-lines .line3 {
+  transform-origin: 0% 100%;
+  transition: transform 0.4s ease-in-out;
+}
+
+.navbar .menu-items {
+  padding-top: 120px;
+  box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
+  height: 100vh;
+  width: 100%;
+  transform: translate(-150%);
+  display: flex;
+  flex-direction: column;
+  margin-left: -40px;
+  padding-left: 50px;
+  transition: transform 0.5s ease-in-out;
+  text-align: center;
+}
+
+.navbar .menu-items li {
+  margin-bottom: 1.2rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.logo {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  font-size: 1.2rem;
+  color: #0e2431;
+}
+
+.nav-container input[type="checkbox"]:checked ~ .menu-items {
+  transform: translateX(0);
+}
+
+.nav-container input[type="checkbox"]:checked ~ .hamburger-lines .line1 {
+  transform: rotate(45deg);
+}
+
+.nav-container input[type="checkbox"]:checked ~ .hamburger-lines .line2 {
+  transform: scaleY(0);
+}
+
+.nav-container input[type="checkbox"]:checked ~ .hamburger-lines .line3 {
+  transform: rotate(-45deg);
+}
+
+.nav-container input[type="checkbox"]:checked ~ .logo{
+  display: none;
+}
+</style>
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+</head>
+
+<body translate="no">
+  <body>
+    <div class="game">
+      <script>
+        var isWin = false;
+      </script>
+      <script id="game0" type="module"></script>
+      <script> 
+        console.log(isWin + "isWin!!")
+        const script = document.getElementById("game0");
+        script.src = "{{site.baseurl}}/assets/js/codeClimbers/game.js";
+          function switchLevel() {
+            console.log("change!!");
+            if (isWin === true) {
+              updateGameScriptSource();
+              console.log("its true!");
+            };
+            function updateGameScriptSource() {
+              script.remove()
+              const newScript = document.createElement("script");
+              newScript.id = "game0";
+              newScript.type = "module";
+              newScript.src = "{{site.baseurl}}/assets/js/codeClimbers/game2.js";
+              document.body.appendChild(newScript);
+              console.log("new game!!");
+              console.log(script.src);
+            };
+          };
+          setInterval(switchLevel, 100);
+      </script>
+    </div>
+    <nav>
+      <div class="navbar">
+        <div class="container nav-container">
+            <input class="checkbox" type="checkbox" name="" id="" />
+            <div class="hamburger-lines">
+              <span class="line line1"></span>
+              <span class="line line2"></span>
+              <span class="line line3"></span>
+            </div>  
+          <div class="logo">
+            <h1>CodeClimbers</h1>
+          </div>
+          <div class="menu-items">
+            <li><a href="https://gavincopley.github.io/sharedGame">Home</a></li>
+            <li><a href="https://gavincopley.github.io/sharedGame/about/">About</a></li>
+            <li><a href="https://gavincopley.github.io/sharedGame/blogs/">Blogs</a></li>
+            <li><a href="#">Help</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="https://gavincopley.github.io/sharedGame/compsci/">Timebox</a></li>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </body>
+  
+  
+  
+</body>
+<img id="roadImage" src="{{site.baseurl}}/assets/js/img/road.png" style="display: none;">
+<img id="floorImage" src="{{site.baseurl}}/images/road.png" style="display: none;">
+<img id="backgroundImage" src="{{site.baseurl}}/images/background.png" style="display: none;">
+<img id="buildingImage" src="{{site.baseurl}}/images/building.png" style="display: none;">
+<img id="spriteRight" src="{{site.baseurl}}/images/spriteRight.png" style="display: none;">
+<img id="spriteLeft" src="{{site.baseurl}}/images/spriteLeft.png" style="display: none;">
+</html>
+
+<style>
+    body {
+        margin: 0;
+    }
+</style>
+
+<canvas></canvas>
