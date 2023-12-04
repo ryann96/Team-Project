@@ -1,7 +1,7 @@
 import GameEnv from './GameEnv.js';
 import GameObject from './GameObject.js';
 
-export class Tube extends GameObject {
+export class PlatformO extends GameObject {
     constructor(canvas, image) {
         super(canvas, image, 0);
     }
@@ -21,11 +21,11 @@ export class Tube extends GameObject {
         const scaledHeight = GameEnv.innerHeight * (100 / 832);
         // Formula for Width is scaled: scaledWidth/scaledHeight == this.width/this.height
         const scaledWidth = scaledHeight * this.aspect_ratio;
-        const tubeX = .90 * GameEnv.innerWidth;
-        const tubeY = (GameEnv.bottom - scaledHeight);
+        const platformX = .60 * GameEnv.innerWidth;
+        const platformY = (GameEnv.bottom - scaledHeight);
 
         // set variables used in Display and Collision algorithms
-        this.bottom = tubeY;
+        this.bottom = platformY;
         this.collisionHeight = scaledHeight;
         this.collisionWidth = scaledWidth;
     
@@ -34,10 +34,10 @@ export class Tube extends GameObject {
         this.canvas.style.width = `${scaledWidth}px`;
         this.canvas.style.height = `${scaledHeight}px`;
         this.canvas.style.position = 'absolute';
-        this.canvas.style.left = `${tubeX}px`;
-        this.canvas.style.top = `${tubeY}px`; 
+        this.canvas.style.left = `${platformX}px`;
+        this.canvas.style.top = `${platformY}px`; 
 
     }
 }
 
-export default Tube;
+export default PlatformO;
