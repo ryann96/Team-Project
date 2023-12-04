@@ -131,7 +131,23 @@ export class Player extends Character{
                 this.movement.down = false;
                 this.x = this.collisionData.touchPoints.other.x;
             }
-        } else {
+        }
+        if (this.collisionData.touchPoints.other.id === "jumpPlatform") {
+            // Collision with the left side of the Tube
+            if (this.collisionData.touchPoints.other.left) {
+                this.movement.right = false;
+            }
+            // Collision with the right side of the Tube
+            if (this.collisionData.touchPoints.other.right) {
+                this.movement.left = false;
+            }
+            // Collision with the top of the player
+            if (this.collisionData.touchPoints.other.ontop) {
+                this.movement.down = false;
+                this.x = this.collisionData.touchPoints.other.x;
+            }
+        }
+        else {
             // Reset movement flags if not colliding with a tube
             this.movement.left = true;
             this.movement.right = true;

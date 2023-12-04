@@ -91,7 +91,7 @@ class GameObject {
     */
     isCollision(otherGameObject) {
 
-        this.collisionData = {
+        this = {
             hit: (this.x + this.collisionWidth > otherGameObject.x &&
             this.x < otherGameObject.x + otherGameObject.collisionWidth &&
             this.y + this.collisionHeight > otherGameObject.y &&

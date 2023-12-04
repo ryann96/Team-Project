@@ -88,7 +88,7 @@ class GameLevel {
 
             if (this.platformOImg) {
                 const platformCanvas = document.createElement("canvas");
-                platformCanvas.id = "platformO";
+                platformCanvas.id = "jumpPlatform";
                 document.querySelector("#canvasContainer").appendChild(platformCanvas);
                 const platformSpeedRatio = 0;
                 new PlatformO(platformCanvas, loadedImages[i], platformSpeedRatio);
