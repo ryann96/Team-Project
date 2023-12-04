@@ -1,5 +1,4 @@
 ---
-title: Code Climbers!
 layout:
 image: 
 platform: /images/road.png
