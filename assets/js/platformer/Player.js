@@ -66,7 +66,7 @@ export class Player extends Character{
     
         // verify key is in active animations
         if (key in this.pressedKeys) {
-            result = (!this.isIdle && this.bottom <= this.y);
+            result = (!this.isIdle && (this.topOfPlatform ||this.bottom <= this.y));
         }
 
         // scene for on top of tube animation
@@ -108,7 +108,8 @@ export class Player extends Character{
             if (this.movement.right) this.x += this.speed;  // Move to right
         }
         if (this.isGravityAnimation("w")) {
-            if (this.movement.down) this.y -= (this.bottom * .33);  // jump 33% higher than bottom
+            console.log(this.topOfPlatform)
+            if (this.movement.down || this.topOfPlatform) this.y -= (this.bottom * .33);  // jump 33% higher than bottom
             this.gravityEnabled = true;
         } 
 
@@ -136,7 +137,7 @@ export class Player extends Character{
             // Collision with the left side of the Tube
             if (this.collisionData.touchPoints.other.left) {
                 this.movement.right = false;
-                console.log("a")
+                //console.log("a")
             }
             // Collision with the right side of the Tube
             if (this.collisionData.touchPoints.other.right) {
@@ -154,11 +155,13 @@ export class Player extends Character{
             }
             if (this.collisionData.touchPoints.this.top) {
                 this.gravityEnabled = false;
-                console.log("e")
+                this.topOfPlatform = true; 
+                //console.log("e");
             }
         }
         else {
             // Reset movement flags if not colliding with a tube
+            this.topOfPlatform = false;
             this.movement.left = true;
             this.movement.right = true;
             this.movement.down = true;
