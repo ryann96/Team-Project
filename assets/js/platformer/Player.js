@@ -109,7 +109,7 @@ export class Player extends Character{
         }
         if (this.isGravityAnimation("w")) {
             console.log(this.topOfPlatform)
-            if (this.movement.down || this.topOfPlatform) this.y -= (this.bottom * .33);  // jump 33% higher than bottom
+            if (this.movement.down || this.topOfPlatform) this.y -= (this.bottom * .21);  // jump 22% higher than bottom
             this.gravityEnabled = true;
         } 
 
