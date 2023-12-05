@@ -1,7 +1,7 @@
 class Movement{
     Vx = 0; //instantous x velocity
     Vy = 0; //instantous y velocity
-    FaAc = -10; //falling acelleration
+    FaAc = -5; //falling acelleration
     VyMin = -50; //max falling speed (minimum y velocity)
     DeltaX = 0; //x direction of buttons pressed (1 up, -1 down, 0 none)
     DeltaY = 0; //y direction of buttons pressed (1 right, -1 left, 0 none)
