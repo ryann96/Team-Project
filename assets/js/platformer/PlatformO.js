@@ -18,10 +18,10 @@ export class PlatformO extends GameObject {
     // Set Tube position
     size() {
         // Formula for Height should be on constant ratio, using a proportion of 832
-        const scaledHeight = GameEnv.innerHeight * (100 / 832);
+        const scaledHeight = GameEnv.innerHeight * (60/832);
         // Formula for Width is scaled: scaledWidth/scaledHeight == this.width/this.height
-        const scaledWidth = scaledHeight * this.aspect_ratio;
-        const platformX = .60 * GameEnv.innerWidth;
+        const scaledWidth = 125;
+        const platformX = .1 * GameEnv.innerWidth;
         const platformY = (GameEnv.bottom - scaledHeight);
 
         // set variables used in Display and Collision algorithms
