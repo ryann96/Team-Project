@@ -109,6 +109,7 @@ export class Player extends Character{
         }
         if (this.isGravityAnimation("w")) {
             if (this.movement.down) this.y -= (this.bottom * .33);  // jump 33% higher than bottom
+            this.gravityEnabled = true;
         } 
 
         // Perform super update actions
@@ -128,7 +129,6 @@ export class Player extends Character{
             }
             // Collision with the top of the player
             if (this.collisionData.touchPoints.other.ontop) {
-                this.movement.down = false;
                 this.x = this.collisionData.touchPoints.other.x;
             }
         }
@@ -136,15 +136,25 @@ export class Player extends Character{
             // Collision with the left side of the Tube
             if (this.collisionData.touchPoints.other.left) {
                 this.movement.right = false;
+                console.log("a")
             }
             // Collision with the right side of the Tube
             if (this.collisionData.touchPoints.other.right) {
                 this.movement.left = false;
+                console.log("b")
             }
             // Collision with the top of the player
-            if (this.collisionData.touchPoints.other.ontop) {
-                this.movement.down = false;
-                this.x = this.collisionData.touchPoints.other.x;
+            if (this.collisionData.touchPoints.this.ontop) {
+                this.gravityEnabled = false;
+                console.log("c")
+            }
+            if (this.collisionData.touchPoints.this.bottom) {
+                this.gravityEnabled = false;
+                console.log("d")
+            }
+            if (this.collisionData.touchPoints.this.top) {
+                this.gravityEnabled = false;
+                console.log("e")
             }
         }
         else {
@@ -152,6 +162,7 @@ export class Player extends Character{
             this.movement.left = true;
             this.movement.right = true;
             this.movement.down = true;
+            this.gravityEnabled = true;
         }
     }
     
