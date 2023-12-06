@@ -35,7 +35,7 @@ export class Thing1 extends GameObject {
 
         // Center the object on the screen
         const thingX = (GameEnv.innerWidth - scaledWidth) / 7.5;
-        const thingY = (GameEnv.innerHeight - scaledHeight) / 1.2;
+        const thingY = (GameEnv.innerHeight - scaledHeight) / 2;
 
         // Set variables used in Display and Collision algorithms
         this.bottom = thingY + scaledHeight;
