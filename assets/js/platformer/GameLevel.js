@@ -2,6 +2,7 @@ import GameEnv from './GameEnv.js';
 import Background from './Background.js';
 import Platform from './Platform.js';
 import PlatformO from './PlatformO.js';
+import Thing1 from './Thing1.js';
 import Player from './Player.js';
 import Tube from './Tube.js';
 
@@ -13,6 +14,7 @@ class GameLevel {
         this.backgroundImg = gameObject.background?.file;
         this.platformImg = gameObject.platform?.file;
         this.platformOImg = gameObject.platformO?.file;
+        this.thingImg = gameObject.thing?.file; 
         this.playerImg = gameObject.player?.file;
         this.playerData = gameObject?.player;
         this.tubeImg = gameObject.tube?.file;
@@ -36,6 +38,9 @@ class GameLevel {
         }
         if (this.tubeImg) {
             imagesToLoad.push(this.loadImage(this.tubeImg));
+        }
+        if (this.thingImg) {
+            imagesToLoad.push(this.loadImage(this.thingImg))
         }
         if (this.platformOImg) {
             imagesToLoad.push(this.loadImage(this.platformOImg));
@@ -83,6 +88,15 @@ class GameLevel {
                 tubeCanvas.id = "tube";
                 document.querySelector("#canvasContainer").appendChild(tubeCanvas);
                 new Tube(tubeCanvas, loadedImages[i]);
+                i++;
+            }
+                
+            if (this.thingImg) {
+                const platformCanvas = document.createElement("canvas");
+                platformCanvas.id = "thing2";
+                document.querySelector("#canvasContainer").appendChild(platformCanvas);
+                const platformSpeedRatio = 0;
+                new Thing1(platformCanvas, loadedImages[i], platformSpeedRatio);
                 i++;
             }
 

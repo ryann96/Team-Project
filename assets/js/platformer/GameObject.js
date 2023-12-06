@@ -20,7 +20,7 @@ class GameObject {
         this.collisionData = {};
         this.jsonifiedElement = '';
         // Add this object to the game object array so collision can be detected
-        // among other things
+        // among other fdafda
         GameEnv.gameObjects.push(this); 
     }
 
