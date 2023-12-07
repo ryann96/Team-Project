@@ -168,13 +168,13 @@ export class Player extends Character{
                 if (this.collisionData.touchPoints.coin.left) {
                     this.touchCoin = true;
                     console.log("o")
-                    window.location.reload();  // Reload the page
+                    coin.shrinkCoin();
                 }
                 // Collision with the right side of the Tube
                 if (this.collisionData.touchPoints.coin.right) {
                     console.log("p")
                     this.touchCoin = true;
-                    window.location.reload();
+                    coin.shrinkCoin();
                 }
             }    
             

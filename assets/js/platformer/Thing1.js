@@ -32,12 +32,12 @@ export class Thing1 extends GameObject {
         // Make the image 10 times smaller
         const scaledWidth = this.image.width * 0.2;
         const scaledHeight = this.image.height * 0.169;
-    
+
         // Center the object on the screen
         const randomPosition = Math.random() < 0.5; // Randomly choose between two positions
-    
+
         let thingX, thingY;
-    
+
         if (randomPosition) {
             thingX = (GameEnv.innerWidth - scaledWidth) / 2.5;
             thingY = (GameEnv.innerHeight - scaledHeight) / 1.01;
@@ -45,17 +45,31 @@ export class Thing1 extends GameObject {
             thingX = (GameEnv.innerWidth - scaledWidth) / 7.5;
             thingY = (GameEnv.innerHeight - scaledHeight) / 2.02;
         }
-    
+
         // Set variables used in Display and Collision algorithms
         this.bottom = thingY + scaledHeight;
         this.collisionHeight = scaledHeight;
         this.collisionWidth = scaledWidth;
-    
+
         this.canvas.style.width = `${scaledWidth}px`;
         this.canvas.style.height = `${scaledHeight}px`;
         this.canvas.style.position = 'absolute';
         this.canvas.style.left = `${thingX}px`;
         this.canvas.style.top = `${thingY}px`;
+    }
+
+    // Method to shrink the coin
+    shrinkCoin() {
+        // Set variables used in Display and Collision algorithms
+        const scaledWidth = 0; // Set width to 0
+        const scaledHeight = 0; // Set height to 0
+
+        this.bottom = 0;
+        this.collisionHeight = 0;
+        this.collisionWidth = 0;
+
+        this.canvas.style.width = `${scaledWidth}px`;
+        this.canvas.style.height = `${scaledHeight}px`;
     }
 }
 
