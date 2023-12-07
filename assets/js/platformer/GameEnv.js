@@ -23,6 +23,8 @@ export class GameEnv {
     // canvas filter property
     static isInverted = true;
 
+    static touchCoin = false;
+
 
     // Make the constructor private to prevent instantiation
     constructor() {
@@ -108,6 +110,18 @@ export class GameEnv {
         }
         this.isInverted = !this.isInverted;  // switch boolean value
     }
+    static touchingCoin() {
+        let score = 0;
+        let coinValue = 0;
+        score = 0;
+        coinValue = 0;
+        if (Player.touchCoin === true) {
+            document.getElementById('score').innerText = `Score: ${score}`;
+            score = score++;
+        }
+
+    }
 }
+    
 
 export default GameEnv;

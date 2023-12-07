@@ -18,6 +18,7 @@ permalink: /mariogame
 <!-- Prepare DOM elements -->
 <!-- Wrap both the canvas and controls in a container div -->
 <div id="canvasContainer">
+    <div id="score"></div>
     <div id="gameBegin" hidden>
         <button id="startGame">Start Game</button>
     </div>

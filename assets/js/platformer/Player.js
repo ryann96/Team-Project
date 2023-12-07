@@ -166,11 +166,15 @@ export class Player extends Character{
             if (this.collisionData.touchPoints.other.id === "thing2") {
                 // Collision with the left side of the Tub
                 if (this.collisionData.touchPoints.coin.left) {
+                    this.touchCoin = true;
+                    console.log(GameEnv.score)
+                    console.log(GameEnv.coinValue + "hi")
                     console.log("o")
                 }
                 // Collision with the right side of the Tube
                 if (this.collisionData.touchPoints.coin.right) {
                     console.log("p")
+                    this.touchCoin = true;
                 }
             }
             // Reset movement flags if not colliding with a tube
