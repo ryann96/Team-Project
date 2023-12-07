@@ -58,19 +58,8 @@ export class Thing1 extends GameObject {
         this.canvas.style.top = `${thingY}px`;
     }
 
-    // Method to shrink the coin
-    shrinkCoin() {
-        // Set variables used in Display and Collision algorithms
-        const scaledWidth = 0; // Set width to 0
-        const scaledHeight = 0; // Set height to 0
-
-        this.bottom = 0;
-        this.collisionHeight = 0;
-        this.collisionWidth = 0;
-
-        this.canvas.style.width = `${scaledWidth}px`;
-        this.canvas.style.height = `${scaledHeight}px`;
+   
     }
-}
 
 export default Thing1;
+
