@@ -171,6 +171,15 @@ class GameObject {
                     ontop: Math.abs(thisBottom - otherRect.top) <= GameEnv.gravity,
                     x: otherRect.left
                 },
+                coin: {
+                    id: other.canvas.id,
+                    top: thisCenterY > otherCenterY,
+                    bottom: thisCenterY < otherCenterY,
+                    left: thisCenterX < otherCenterX,
+                    right: thisCenterX > otherCenterX,
+                    ontop: Math.abs(thisBottom - otherRect.top) <= GameEnv.gravity,
+                    x: otherRect.left
+                },
             },
         };
 

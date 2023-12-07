@@ -135,6 +135,7 @@ export class Player extends Character{
         }
         if (this.collisionData.touchPoints.other.id === "jumpPlatform") {
             // Collision with the left side of the Tub
+            console.log("id")
             if (this.collisionData.touchPoints.other.left && (this.topOfPlatform === true)) {
                 this.movement.right = false;
                 console.log("a")
@@ -156,10 +157,22 @@ export class Player extends Character{
             if (this.collisionData.touchPoints.this.top) {
                 this.gravityEnabled = false;
                 this.topOfPlatform = true; 
+                console.log(this.topOfPlatform + "top")
+                console.log(this.gravityEnabled + "grav")
                 //console.log("e");
             }
         }
         else {
+            if (this.collisionData.touchPoints.other.id === "thing2") {
+                // Collision with the left side of the Tub
+                if (this.collisionData.touchPoints.coin.left) {
+                    console.log("o")
+                }
+                // Collision with the right side of the Tube
+                if (this.collisionData.touchPoints.coin.right) {
+                    console.log("p")
+                }
+            }
             // Reset movement flags if not colliding with a tube
             this.topOfPlatform = false;
             this.movement.left = true;
