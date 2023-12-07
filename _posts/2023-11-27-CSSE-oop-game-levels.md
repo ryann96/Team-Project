@@ -57,7 +57,6 @@ permalink: /mariogame
       },  
       platformO: {
         grass: { src: "/images/brick_wall.png" },
-        alien: { src: "/images/platformer/platforms/alien.png" }
       },
       backgrounds: {
         start: { src: "/images/platformer/backgrounds/home.png" },
