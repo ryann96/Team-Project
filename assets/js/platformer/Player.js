@@ -177,6 +177,7 @@ export class Player extends Character{
                     window.location.reload();
                 }
             }    
+            
             // Reset movement flags if not colliding with a tube
             this.topOfPlatform = false;
             this.movement.left = true;

@@ -32,16 +32,25 @@ export class Thing1 extends GameObject {
         // Make the image 10 times smaller
         const scaledWidth = this.image.width * 0.2;
         const scaledHeight = this.image.height * 0.169;
-
+    
         // Center the object on the screen
-        const thingX = (GameEnv.innerWidth - scaledWidth) / 7.5;
-        const thingY = (GameEnv.innerHeight - scaledHeight) / 1.2;
-
+        const randomPosition = Math.random() < 0.5; // Randomly choose between two positions
+    
+        let thingX, thingY;
+    
+        if (randomPosition) {
+            thingX = (GameEnv.innerWidth - scaledWidth) / 2.5;
+            thingY = (GameEnv.innerHeight - scaledHeight) / 0.8;
+        } else {
+            thingX = (GameEnv.innerWidth - scaledWidth) / 7.5;
+            thingY = (GameEnv.innerHeight - scaledHeight) / 1.1;
+        }
+    
         // Set variables used in Display and Collision algorithms
         this.bottom = thingY + scaledHeight;
         this.collisionHeight = scaledHeight;
         this.collisionWidth = scaledWidth;
-
+    
         this.canvas.style.width = `${scaledWidth}px`;
         this.canvas.style.height = `${scaledHeight}px`;
         this.canvas.style.position = 'absolute';
