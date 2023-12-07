@@ -40,7 +40,7 @@ class GameLevel {
             imagesToLoad.push(this.loadImage(this.tubeImg));
         }
         if (this.thingImg) {
-            imagesToLoad.push(this.loadImage(this.thingImg))
+            imagesToLoad.push(this.loadImage(this.thingImg));
         }
         if (this.platformOImg) {
             imagesToLoad.push(this.loadImage(this.platformOImg));
