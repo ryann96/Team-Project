@@ -5,6 +5,7 @@ import PlatformO from './PlatformO.js';
 import Thing1 from './Thing1.js';
 import Player from './Player.js';
 import Tube from './Tube.js';
+import Enemy from './Enemy.js'; // Import Goomba
 
 // Store the assets and attributes of the Game at the specific GameLevel.
 class GameLevel {
@@ -17,8 +18,11 @@ class GameLevel {
         this.thingImg = gameObject.thing?.file; 
         this.playerImg = gameObject.player?.file;
         this.playerData = gameObject?.player;
+        this.enemyImg = gameObject.enemy?.file;
+        this.enemyData = gameObject?.enemy;
         this.tubeImg = gameObject.tube?.file;
         this.isComplete = gameObject?.callback; // function that determines if level is complete
+        this.enemyImg = gameObject.enemy?.file; // Get enemy's image file from the provided GameObject
         GameEnv.levels.push(this);
     }
 
@@ -35,6 +39,9 @@ class GameLevel {
         }
         if (this.playerImg) {
             imagesToLoad.push(this.loadImage(this.playerImg));
+        }
+        if (this.enemyImg) {
+            imagesToLoad.push(this.loadImage(this.enemyImg));
         }
         if (this.tubeImg) {
             imagesToLoad.push(this.loadImage(this.tubeImg));
@@ -80,6 +87,16 @@ class GameLevel {
                 const playerSpeedRatio = 0.7;
                 new Player(playerCanvas, loadedImages[i], playerSpeedRatio, this.playerData);
                 i++;
+            }
+
+            //Goomba Loader
+            if (this.enemyImg) {
+                const enemyCanvas = document.createElement("canvas");
+                enemyCanvas.id = "enemy";
+                document.querySelector("#canvasContainer").appendChild(enemyCanvas);
+                const enemySpeedRatio = 0.7
+                new Enemy(enemyCanvas, loadedImages[i], enemySpeedRatio, this.enemyData);
+                i++
             }
 
             // Prepare HTML with Player Canvas (if playerImg is defined)

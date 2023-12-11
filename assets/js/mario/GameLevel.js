@@ -47,7 +47,10 @@ class GameLevel {
         if (this.playerImg) {
             imagesToLoad.push(this.loadImage(this.playerImg));
         }
-
+        if (this.enemyImg) {
+            imagesToLoad.push(this.loadImage(this.enemyImg));
+        }
+        
         try {
             // Do not proceed until images are loaded
             const loadedImages = await Promise.all(imagesToLoad);

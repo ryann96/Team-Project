@@ -1,6 +1,6 @@
 import GameEnv from './GameEnv.js';
 import Character from './Character.js';
-
+import deathController from './Death.js';
 export class Player extends Character{
     // constructors sets up Character object 
     constructor(canvas, image, speedRatio, playerData){
@@ -177,6 +177,24 @@ export class Player extends Character{
                     window.location.reload();
                 }
             }    
+
+            // Enemy collision
+        if (this.collisionData.touchPoints.other.id === "enemy") {
+            // Collision with the left side of the Enemy
+            if (this.collisionData.touchPoints.other.left) {
+                window.location.reload(); // Reload the game to reset it
+            }
+            // Collision with the right side of the Enemy
+            if (this.collisionData.touchPoints.other.right) {
+                deathController.setDeath(1);
+                window.location.reload(); // Reload the game to reset it
+            }
+            // Collision with the top of the Enemy
+            if (this.collisionData.touchPoints.other.ontop) {
+                this.destroyGoomba(); // Function to handle Goomba destruction
+                // Make Mario Bounce
+            }
+          }
             
             // Reset movement flags if not colliding with a tube
             this.topOfPlatform = false;
