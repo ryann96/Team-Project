@@ -179,22 +179,22 @@ export class Player extends Character{
             }    
 
             // Enemy collision
-        if (this.collisionData.touchPoints.other.id === "enemy") {
-            // Collision with the left side of the Enemy
-            if (this.collisionData.touchPoints.other.left) {
-                window.location.reload(); // Reload the game to reset it
+            if (this.collisionData.touchPoints.other.id === "enemy") {
+                // Collision with the left side of the Enemy
+                if (this.collisionData.touchPoints.other.left) {
+                    
+                }
+                // Collision with the right side of the Enemy
+                if (this.collisionData.touchPoints.other.right) {
+                  
+                }
+                // Collision with the top of the Enemy
+                if (this.collisionData.touchPoints.other.ontop) {
+                    // Add a bounce effect here
+                    const jumpHeight = 500; // Adjust this value to control the bounce height
+                    this.y -= jumpHeight; // Move the player up by jumpHeight
+                }
             }
-            // Collision with the right side of the Enemy
-            if (this.collisionData.touchPoints.other.right) {
-                deathController.setDeath(1);
-                window.location.reload(); // Reload the game to reset it
-            }
-            // Collision with the top of the Enemy
-            if (this.collisionData.touchPoints.other.ontop) {
-                this.destroyGoomba(); // Function to handle Goomba destruction
-                // Make Mario Bounce
-            }
-          }
             
             // Reset movement flags if not colliding with a tube
             this.topOfPlatform = false;
