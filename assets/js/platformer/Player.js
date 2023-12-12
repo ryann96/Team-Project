@@ -182,7 +182,7 @@ export class Player extends Character{
             if (this.collisionData.touchPoints.other.id === "enemy") {
                 // Collision with the left side of the Enemy
                 if (this.collisionData.touchPoints.other.left) {
-                    window.location.reload(); // Reload the game to reset it 
+                     
                 }
                 // Collision with the right side of the Enemy
                 if (this.collisionData.touchPoints.other.right) {
