@@ -28,8 +28,8 @@ export class Enemy extends Character {
             this.speed += randomSpeedChange; // Modify the current speed by a random value
             
             // Ensure speed stays within a certain range
-            const maxSpeed = 25;
-            const minSpeed = 15;
+            const maxSpeed = 10;
+            const minSpeed = 5;
             this.speed = Math.max(Math.min(this.speed, maxSpeed), minSpeed);
             
             this.lastSpeedChange = currentTime; // Update last speed change time
