@@ -182,11 +182,12 @@ export class Player extends Character{
             if (this.collisionData.touchPoints.other.id === "enemy") {
                 // Collision with the left side of the Enemy
                 if (this.collisionData.touchPoints.other.left) {
-                     
+                  // Add a bounce effect here
+                  const jumpHeight = 500; // Adjust this value to control the bounce height
+                  this.y -= jumpHeight; // Move the player up by jumpHeight   
                 }
                 // Collision with the right side of the Enemy
                 if (this.collisionData.touchPoints.other.right) {
-                    deathController.setDeath(1);
                     window.location.reload(); // Reload the game to reset it
                 }
                 // Collision with the top of the Enemy
