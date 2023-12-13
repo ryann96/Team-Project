@@ -9,10 +9,34 @@ permalink: /mariogame
 ---
 
 <style>
-    #gameBegin, #controls, #gameOver {
-        position: relative;
-        z-index: 2; /*Ensure the controls are on top*/
+  #gameBegin, #controls, #gameOver {
+    position: relative;
+    z-index: 2; /*Ensure the controls are on top*/
+  }
+  
+  #toggleCanvasEffect, #background, #platform {
+    animation: fadein 5s;
+  }
+
+  #startGame {
+    animation: flash 0.5s infinite;
+  }
+
+  @keyframes flash {
+    50% {
+      opacity: 0;
     }
+  }
+
+  @keyframes fadeout {
+    from {opacity: 1}
+    to {opacity: 0}
+  }
+
+  @keyframes fadein {
+    from {opacity: 0}
+    to {opacity: 1}
+  }
 </style>
 
 <!-- Prepare DOM elements -->
@@ -62,6 +86,7 @@ permalink: /mariogame
   backgrounds: {
     start: { src: "/images/platformer/backgrounds/home.png" },
     hills: { src: "/images/platformer/backgrounds/hills.png" },
+    mountains: { src: "/images/platformer/backgrounds/mountains.jpg"},
     planet: { src: "/images/platformer/backgrounds/planet.jpg" },
     castles: { src: "/images/platformer/backgrounds/castles.png" },
     end: { src: "/images/platformer/backgrounds/game_over.png" }
@@ -176,13 +201,36 @@ permalink: /mariogame
      * c.) the home advances to 1st game level when button selection is made
     */
     // Start/Home screens
-    new GameLevel( {tag: "start", callback: startGameCallback } );
-    new GameLevel( {tag: "home", background: assets.backgrounds.start, callback: homeScreenCallback } );
+    new GameLevel( {tag: "start", 
+      callback: startGameCallback 
+      });
+    new GameLevel( {tag: "home", 
+      background: assets.backgrounds.start, 
+      callback: homeScreenCallback 
+    });
     // Game screens
-    new GameLevel( {tag: "hills", background: assets.backgrounds.hills, platform: assets.platforms.grass, platformO: assets.platformO.grass, player: assets.players.mario, enemy: assets.enemies.goomba, tube: assets.obstacles.tube, callback: testerCallBack, thing: assets.thing.coin, } );
-    new GameLevel( {tag: "alien", background: assets.backgrounds.planet, platform: assets.platforms.alien, player: assets.players.monkey, callback: testerCallBack } );
+    new GameLevel( {tag: "hills", 
+      background: assets.backgrounds.hills,
+      background2: assets.backgrounds.mountains,
+      platform: assets.platforms.grass, 
+      platformO: assets.platformO.grass, 
+      player: assets.players.mario, 
+      enemy: assets.enemies.goomba, 
+      tube: assets.obstacles.tube, 
+      callback: testerCallBack, 
+      thing: assets.thing.coin,
+    });
+    new GameLevel( {tag: "alien", 
+      background: assets.backgrounds.planet, 
+      platform: assets.platforms.alien, 
+      player: assets.players.monkey, 
+      callback: testerCallBack 
+    });
     // Game Over screen
-    new GameLevel( {tag: "end", background: assets.backgrounds.end, callback: gameOverCallBack } );
+    new GameLevel( {tag: "end", 
+      background: assets.backgrounds.end, 
+      callback: gameOverCallBack 
+    });
 
     /*  ==========================================
      *  ========== Game Control ==================
