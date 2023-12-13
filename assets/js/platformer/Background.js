@@ -12,6 +12,7 @@ export class Background extends GameObject {
     *  width is extent of background image
     */
     update() {
+        this.speed = GameEnv.backgroundSpeed;
         this.x = (this.x - this.speed) % this.width;
     }
 

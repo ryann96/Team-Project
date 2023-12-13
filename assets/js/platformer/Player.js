@@ -101,7 +101,7 @@ export class Player extends Character{
 
     // Player updates
     update() {
-        if (this.isAnimation("a")) {
+        if (this.isAnimation("a") && (this.x > 0)) {
             if (this.movement.left) this.x -= this.speed;  // Move to left
         }
         if (this.isAnimation("d")) {
@@ -111,7 +111,7 @@ export class Player extends Character{
             console.log(this.topOfPlatform)
             if (this.movement.down || this.topOfPlatform) this.y -= (this.bottom * .50);  // jump 22% higher than bottom
             this.gravityEnabled = true;
-        } 
+        }
 
         // Perform super update actions
         super.update();
@@ -225,11 +225,11 @@ handleKeyDown(event) {
             // player active
             this.isIdle = false;
         }
-        if (key === "a") {
+        if ((key === "a") && (this.x > 0)) {
             GameEnv.backgroundSpeed2 = -0.1;
             GameEnv.backgroundSpeed = -0.4;
         }
-        if (key === "d") {
+        if ((key === "d") && (this.x > 75)) {
             GameEnv.backgroundSpeed2 = 0.1;
             GameEnv.backgroundSpeed = 0.4;
         }
@@ -243,7 +243,7 @@ handleKeyUp(event) {
         if (event.key in this.pressedKeys) {
             delete this.pressedKeys[event.key];
         }
-        if (key === "a") {
+        if ((key === "a") || (this.x === 0)) {
             GameEnv.backgroundSpeed = 0;
             GameEnv.backgroundSpeed2 = 0;
         }
