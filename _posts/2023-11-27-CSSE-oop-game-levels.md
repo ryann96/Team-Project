@@ -9,18 +9,34 @@ permalink: /mariogame
 ---
 
 <style>
-  #gameBegin, #controls, #gameOver {
+
+  .sidenav {
+      position: fixed;
+      height: 100%; /* 100% Full-height */
+      width: 0px; /* 0 width - change this with JavaScript */
+      z-index: 3; /* Stay on top */
+      top: 0; /* Stay at the top */
+      left: 0;
+      overflow-x: hidden; /* Disable horizontal scroll */
+      padding-top: 60px; /* Place content 60px from the top */
+      transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+      background-color: black; 
+    }
+    
+ 
+  #gameBegin, #controls, #gameOver, #settings {
     position: relative;
     z-index: 2; /*Ensure the controls are on top*/
   }
   
-  #toggleCanvasEffect, #background, #platform {
+  #toggleCanvasEffect, #toggleSettingsBar, #background, #platform {
     animation: fadein 5s;
   }
 
   #startGame {
     animation: flash 0.5s infinite;
   }
+  
 
   @keyframes flash {
     50% {
@@ -39,6 +55,18 @@ permalink: /mariogame
   }
 </style>
 
+<!-- Sidebar -->
+  <div id="mySidebar" class="sidenav">
+    <a href="javascript:void(0)" id="toggleSettingsBar1" class="closebtn">&times;</a>
+    <!-- Sidebar content -->
+     <div class="sidebar-content">
+        <h2>Game Speed</h2>
+        <div>
+            <label for="speedInput">Adjust Speed:</label>
+            <input type="range" min="1" max="10" value="5" class="slider" id="speedInput">
+        </div>
+    </div>
+  </div>
 <!-- Prepare DOM elements -->
 <!-- Wrap both the canvas and controls in a container div -->
 <div id="canvasContainer">
@@ -50,8 +78,12 @@ permalink: /mariogame
         <!-- Background controls -->
         <button id="toggleCanvasEffect">Invert</button>
     </div>
+     <div id="settings"> <!-- Controls -->
+     <button id="toggleSettingsBar">Settings</button>
+        <!-- Background controls --> 
+    </div>
     <div id="gameOver" hidden>
-        <button id="restartGame">Restart</button>
+    <button id="restartGame">Restart</button> 
     </div>
 </div>
 
@@ -60,8 +92,7 @@ permalink: /mariogame
     import GameEnv from '{{site.baseurl}}/assets/js/platformer/GameEnv.js';
     import GameLevel from '{{site.baseurl}}/assets/js/platformer/GameLevel.js';
     import GameControl from '{{site.baseurl}}/assets/js/platformer/GameControl.js';
-    
-
+    import Controller from '{{site.baseurl}}/assets/js/platformer/Controller.js';
 
     /*  ==========================================
      *  ======= Data Definitions =================
@@ -104,15 +135,15 @@ permalink: /mariogame
       d: { row: 2, frames: 7, idleFrame: { column: 7, frames: 0 } }
     },
     monkey: {
-      src: "/images/platformer/sprites/monkey.png",
-      width: 40,
-      height: 40,
-      w: { row: 9, frames: 15 },
-      wa: { row: 9, frames: 15 },
-      wd: { row: 9, frames: 15 },
-      a: { row: 1, frames: 15, idleFrame: { column: 7, frames: 0 } },
-      s: { row: 12, frames: 15 },
-      d: { row: 0, frames: 15, idleFrame: { column: 7, frames: 0 } }
+      src: "/images/platformer/sprites/lopezanimation.png",
+      width: 46,
+      height: 52.5,
+          idle: { row: 6, frames: 1, idleFrame: {column: 1, frames: 0} },
+          a: { row: 1, frames: 4, idleFrame: { column: 1, frames: 0 } }, // Right Movement
+          d: { row: 2, frames: 4, idleFrame: { column: 1, frames: 0 } }, // Left Movement 
+          runningLeft: { row: 5, frames: 4, idleFrame: {column: 1, frames: 0} },
+          runningRight: { row: 4, frames: 4, idleFrame: {column: 1, frames: 0} },
+          s: {}, // Stop the movement 
     }
   },
   enemies: {
@@ -244,4 +275,24 @@ permalink: /mariogame
     // start game
     GameControl.gameLoop();
 
+    // Create an instance of Controller and initialize it
+    var myController = new Controller();
+    myController.initialize();
+
+    var table = myController.levelTable;
+    document.getElementById("mySidebar").append(table);
+
+    // Get the speedDiv element from the Controller instance
+    var speedSetting = myController.speedDiv;
+
+    // Append the speed setting to the sidebar
+    document.getElementById("mySidebar").querySelector('.sidebar-content').appendChild(speedSetting);
+
+    var toggle = false;
+      function toggleWidth(){
+        toggle = !toggle;
+        document.getElementById("mySidebar").style.width = toggle?"250px":"0px";
+      }
+      document.getElementById("toggleSettingsBar").addEventListener("click",toggleWidth);
+      document.getElementById("toggleSettingsBar1").addEventListener("click",toggleWidth);
 </script>
