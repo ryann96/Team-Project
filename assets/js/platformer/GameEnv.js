@@ -6,8 +6,6 @@ export class GameEnv {
     static gameObjects = [];
 
     // game attributes
-    static backgroundSpeed = 0;
-    static backgroundSpeed2 = 0;
     static gameSpeed = 2;
     static gravity = 3;
     static innerWidth;
@@ -22,11 +20,14 @@ export class GameEnv {
     static backgroundHeight = 0;
     static platformHeight = 0;
 
+    //parallax
+    static backgroundSpeed2 = 0;
+    static backgroundSpeed = 0;
+
     // canvas filter property
     static isInverted = true;
 
-    static touchCoin = false;
-
+    static gameStartOver = true; //variable for the if statement
 
     // Make the constructor private to prevent instantiation
     constructor() {
@@ -112,18 +113,81 @@ export class GameEnv {
         }
         this.isInverted = !this.isInverted;  // switch boolean value
     }
-    static touchingCoin() {
-        let score = 0;
-        let coinValue = 0;
-        score = 0;
-        coinValue = 0;
-        if (Player.touchCoin === true) {
-            document.getElementById('score').innerText = `Score: ${score}`;
-            score = score++;
-        }
-
-    }
 }
-    
+
+let time = 0; // Initialize time variable
+let timerInterval; // Variable to hold the interval reference
+
+
+// Function to update and display the timer
+function updateTimer() {
+    const id = document.getElementById("gameOver");
+    if (id.hidden == false) {
+        stopTimer()
+        time=-1
+    }
+   time++; // Increment time (you can adjust this based on your game logic)
+
+
+   // Display the updated time in the span element with id 'timeScore'
+   const timeScoreElement = document.getElementById('timeScore');
+   if (timeScoreElement) {
+       timeScoreElement.textContent = time; // Update the displayed time
+   }
+}
+
+
+// Function to start the timer
+function startTimer() {
+   // Start the timer interval, updating the timer every second (1000 milliseconds)
+   timerInterval = setInterval(updateTimer, 1000);
+}
+
+
+// Function to stop the timer
+function stopTimer() {   
+    clearInterval(timerInterval); // Clear the interval to stop the timer
+ }
+
+
+// Event listener for the start game button click
+document.getElementById('startGame').addEventListener('click', () => {
+   startTimer(); // Start the timer when the game starts
+});
+
+
+// Function to reset the timer
+function resetTimer() {
+   stopTimer(); // Stop the timer
+   time = 0; // Reset the time variable
+   updateTimer(); // Update the displayed time to show 0
+}
+
+
+// Game Over callback
+async function gameOverCallBack() {
+   const id = document.getElementById("gameOver");
+   id.hidden = false;
+
+
+   // Stop the timer on game over
+   stopTimer();
+
+
+   // Use waitForRestart to wait for the restart button click
+   await waitForButton('restartGame');
+   id.hidden = true;
+
+
+   // Change currentLevel to start/restart value of null
+   GameEnv.currentLevel = null;
+
+
+   // Reset the timer when restarting the game
+   resetTimer();
+
+
+   return true;
+}
 
 export default GameEnv;
