@@ -161,61 +161,74 @@ permalink: /mariogame
     }
   }
 };
-  // Function to switch to the leaderboard screen
-    function showLeaderboard() {
-      const id = document.getElementById("gameOver");
-      id.hidden = false;
-      // Hide game canvas and controls
-      document.getElementById('canvasContainer').style.display = 'none';
-      document.getElementById('controls').style.display = 'none';
+  function showLeaderboard() {
+    const id = document.getElementById("gameOver");
+    id.hidden = false;
+    // Hide game canvas and controls
+    document.getElementById('canvasContainer').style.display = 'none';
+    document.getElementById('controls').style.display = 'none';
 
-    // Create and display leaderboard section
-    const leaderboardSection = document.createElement('div');
-    leaderboardSection.id = 'leaderboardSection';
-    leaderboardSection.innerHTML = '<h1 style="text-align: center; font-size: 18px;">Leaderboard </h1>';
-    document.querySelector(".page-content").appendChild(leaderboardSection)
-    // document.body.appendChild(leaderboardSection);
-
-    const playerScores = localStorage.getItem("playerScores")
-    const playerScoresArray = playerScores.split(";")
-    const scoresObj = {}
-    const scoresArr = []
-    for(let i = 0; i< playerScoresArray.length-1; i++){
-      const temp = playerScoresArray[i].split(",")
-      scoresObj[temp[0]] = parseInt(temp[1])
-      scoresArr.push(parseInt(temp[1]))
+    // Check if leaderboard section already exists
+    let leaderboardSection = document.getElementById('leaderboardSection');
+    if (!leaderboardSection) {
+        // Create leaderboard section if it doesn't exist
+        leaderboardSection = document.createElement('div');
+        leaderboardSection.id = 'leaderboardSection';
+        leaderboardSection.innerHTML = '<h1 style="text-align: center; font-size: 18px;">Leaderboard </h1>';
+        document.querySelector(".page-content").appendChild(leaderboardSection);
+    } else {
+        // Clear existing leaderboard contents
+        leaderboardSection.innerHTML = '<h1 style="text-align: center; font-size: 18px;">Leaderboard </h1>';
     }
 
-    scoresArr.sort()
+  // Retrieve player scores and update the leaderboard
+  const playerScores = localStorage.getItem("playerScores");
+  const playerScoresArray = playerScores.split(";");
+  const scoresObj = {};
+  const scoresArr = [];
+  for (let i = 0; i < playerScoresArray.length - 1; i++) {
+      const temp = playerScoresArray[i].split(",");
+      scoresObj[temp[0]] = parseInt(temp[1]);
+      scoresArr.push(parseInt(temp[1]));
+  }
 
-    const finalScoresArr = []
-    for (let i = 0; i<scoresArr.length; i++) {
+  scoresArr.sort();
+
+  const finalScoresArr = [];
+  for (let i = 0; i < scoresArr.length; i++) {
       for (const [key, value] of Object.entries(scoresObj)) {
-        if (scoresArr[i] ==value) {
-          finalScoresArr.push(key + "," + value)
-          break;
-        }
+          if (scoresArr[i] == value) {
+              finalScoresArr.push(key + "," + value);
+              break;
+          }
       }
-    }
-    let rankScore = 1;
-    for (let i =0; i<finalScoresArr.length; i++) {
+  }
+
+  // Append updated scores to the leaderboard section
+  for (let i = 0; i < finalScoresArr.length; i++) {
       const rank = document.createElement('div');
-      rank.id = `rankScore${rankScore}`;
+      rank.id = `rankScore${i + 1}`;
       rank.innerHTML = `<h2 style="text-align: center; font-size: 18px;">${finalScoresArr[i]} </h2>`;
-      document.querySelector(".page-content").appendChild(rank)    
-    }
-    const backButton = document.createElement('button');
+      leaderboardSection.appendChild(rank);
+  }
+
+  // Check if the back button already exists
+  let backButton = document.getElementById('leaderboardBackButton');
+  if (!backButton) {
+    // Create and append back button if it doesn't exist
+    backButton = document.createElement('button');
+    backButton.id = 'leaderboardBackButton';
     backButton.innerText = 'Back';
     backButton.addEventListener('click', () => {
         // Show canvas and controls
         document.getElementById('canvasContainer').style.display = 'block';
         document.getElementById('controls').style.display = 'block';
 
-        // Hide leaderboard and remove leaderboard section
+        // Hide leaderboard
         id.hidden = true;
-        leaderboardSection.remove();
     });
     document.querySelector(".page-content").appendChild(backButton);
+  }
 }
 
 // Event listener for leaderboard button to be clicked
