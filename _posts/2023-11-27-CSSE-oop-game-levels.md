@@ -161,12 +161,83 @@ permalink: /mariogame
     }
   }
 };
+// Sort scores from lowest to highest
+function sortScoresLowToHigh() {
+  const leaderboardSection = document.getElementById('leaderboardSection');
+  const scores = Array.from(leaderboardSection.children);
+
+  scores.sort((a, b) => {
+    const scoreA = parseInt(a.innerText.split(',')[1]);
+    const scoreB = parseInt(b.innerText.split(',')[1]);
+    return scoreA - scoreB;
+  });
+
+  leaderboardSection.innerHTML = '';
+  scores.forEach(score => leaderboardSection.appendChild(score));
+}
+
+// Sort scores from highest to lowest
+function sortScoresHighToLow() {
+  const leaderboardSection = document.getElementById('leaderboardSection');
+  const scores = Array.from(leaderboardSection.children);
+
+  scores.sort((a, b) => {
+    const scoreA = parseInt(a.innerText.split(',')[1]);
+    const scoreB = parseInt(b.innerText.split(',')[1]);
+    return scoreB - scoreA;
+  });
+
+  leaderboardSection.innerHTML = '';
+  scores.forEach(score => leaderboardSection.appendChild(score));
+}
+
+// Sort scores alphabetically by names
+function sortScoresAlphabetically() {
+  const leaderboardSection = document.getElementById('leaderboardSection');
+  const scores = Array.from(leaderboardSection.children);
+
+  // Exclude the first row (header row with "Leaderboard" text)
+  const scoresToSort = scores.slice(1);
+
+  scoresToSort.sort((a, b) => {
+    const nameA = a.innerText.split(',')[0].toLowerCase();
+    const nameB = b.innerText.split(',')[0].toLowerCase();
+    return nameA.localeCompare(nameB);
+  });
+
+  leaderboardSection.innerHTML = '';
+  
+  // Append the header row first
+  leaderboardSection.appendChild(scores[0]);
+  
+  // Append the sorted scores after the header row
+  scoresToSort.forEach(score => leaderboardSection.appendChild(score));
+}
+
+function sortScoresNewestToOldest() {
+  const leaderboardSection = document.getElementById('leaderboardSection');
+  const scores = Array.from(leaderboardSection.children);
+
+  // Sort the scores based on the timestamp when they were added (assuming timestamp is in the format "YYYY-MM-DD HH:mm:ss")
+  scores.sort((a, b) => {
+    const timestampA = new Date(a.dataset.timestamp).getTime();
+    const timestampB = new Date(b.dataset.timestamp).getTime();
+    return timestampB - timestampA;
+  });
+
+  leaderboardSection.innerHTML = '';
+  scores.forEach(score => leaderboardSection.appendChild(score));
+}
+
   function showLeaderboard() {
     const id = document.getElementById("gameOver");
     id.hidden = false;
     // Hide game canvas and controls
     document.getElementById('canvasContainer').style.display = 'none';
     document.getElementById('controls').style.display = 'none';
+
+    const timeScore = document.getElementById("score");
+    timeScore.style.display = "none";
 
     // Check if leaderboard section already exists
     let leaderboardSection = document.getElementById('leaderboardSection');
@@ -226,12 +297,42 @@ permalink: /mariogame
 
         // Hide leaderboard
         id.hidden = true;
+
+        timeScore.style.display = "block";
     });
     document.querySelector(".page-content").appendChild(backButton);
   }
+  let filtersButton = document.getElementById('showFilters');
+  if (!filtersButton) {
+    filtersButton = document.createElement('button');
+    filtersButton.id = 'showFilters';
+    filtersButton.innerText = 'Filters';
+    document.querySelector(".page-content").appendChild(filtersButton);
+
+    const filterButtonsContainer = document.createElement('div');
+    filterButtonsContainer.id = 'filterButtonsContainer';
+    filterButtonsContainer.style.display = 'none';
+
+    filterButtonsContainer.innerHTML = `
+      <button id="sortLowToHigh">Sort Low to High</button>
+      <button id="sortHighToLow">Sort High to Low</button>
+      <button id="sortAlphabetical">Sort Alphabetical</button>
+      <button id="sortNewestToOldest">Sort Newest to Oldest</button>
+    `;
+    document.querySelector(".page-content").appendChild(filterButtonsContainer);
+
+    filtersButton.addEventListener('click', function () {
+      const filtersContainer = document.getElementById('filterButtonsContainer');
+      filtersContainer.style.display = (filtersContainer.style.display === 'none') ? 'block' : 'none';
+    });
+
+    document.getElementById('sortLowToHigh').addEventListener('click', sortScoresLowToHigh);
+    document.getElementById('sortHighToLow').addEventListener('click', sortScoresHighToLow);
+    document.getElementById('sortAlphabetical').addEventListener('click', sortScoresAlphabetically);
+    document.getElementById('sortNewestToOldest').addEventListener('click', sortScoresNewestToOldest);
+  }
 }
 
-// Event listener for leaderboard button to be clicked
 document.getElementById('leaderboardButton').addEventListener('click', showLeaderboard);
 
     // add File to assets, ensure valid site.baseurl
