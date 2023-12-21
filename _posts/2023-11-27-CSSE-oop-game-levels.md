@@ -204,6 +204,18 @@ permalink: /mariogame
       rank.innerHTML = `<h2 style="text-align: center; font-size: 18px;">${finalScoresArr[i]} </h2>`;
       document.querySelector(".page-content").appendChild(rank)    
     }
+    const backButton = document.createElement('button');
+    backButton.innerText = 'Back';
+    backButton.addEventListener('click', () => {
+        // Show canvas and controls
+        document.getElementById('canvasContainer').style.display = 'block';
+        document.getElementById('controls').style.display = 'block';
+
+        // Hide leaderboard and remove leaderboard section
+        id.hidden = true;
+        leaderboardSection.remove();
+    });
+    document.querySelector(".page-content").appendChild(backButton);
 }
 
 // Event listener for leaderboard button to be clicked
