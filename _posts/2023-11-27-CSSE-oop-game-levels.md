@@ -229,6 +229,26 @@ function sortScoresNewestToOldest() {
   scores.forEach(score => leaderboardSection.appendChild(score));
 }
 
+function clearPlayersAndScores() {
+  // Clear player scores from local storage
+  localStorage.removeItem('playerScores');
+  
+  // Optionally, you might want to reset other relevant data if needed
+  
+  // Provide feedback to the user that data has been cleared
+  alert('Players and scores have been cleared.');
+}
+
+// Create a button element
+const clearButton = document.createElement('button');
+clearButton.textContent = 'Clear Players & Scores';
+
+// Add an event listener to the button to trigger the clearing function
+clearButton.addEventListener('click', clearPlayersAndScores);
+
+// Append the button to an existing DOM element, for instance, the sidebar
+document.querySelector('.sidebar-content').appendChild(clearButton);
+
   function showLeaderboard() {
     const id = document.getElementById("gameOver");
     id.hidden = false;
