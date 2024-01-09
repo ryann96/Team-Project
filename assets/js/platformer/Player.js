@@ -32,7 +32,7 @@ export class Player extends Character{
         this.currentSpeed = 0;
         this.acceleration = 0.11; // Adjust based on preference
         this.deceleration = 0.1; // Adjust based on preference 
-
+        this.jumpMod = 1;
         GameEnv.player = this;
     }
 
@@ -104,22 +104,34 @@ export class Player extends Character{
         return result;
     }
     
+    dashTimer;
+    cooldownTimer;
 
     // Player updates
     update() {
         // Adjust speed based on pressed keys
     if (this.pressedKeys['a'] && this.movement.left) {
         this.currentSpeed -= this.acceleration;
+        this.facingLeft = true;
     } else if (this.pressedKeys['d'] && this.movement.right) {
         this.currentSpeed += this.acceleration;
+        this.facingLeft = false;
     } else {
         // Decelerate when no movement keys are pressed
         this.currentSpeed *= (1 - this.deceleration);
     }
+    if (this.isAnimation("s")) {
+        if (this.movement) {  // Check if movement is allowed
+            if(this.dashTimer) {
+                const moveSpeed = this.speed * 2;
+                this.x += this.facingLeft ? -moveSpeed : moveSpeed;
+            };
+        }
+    }
 
     if (this.isGravityAnimation("w")) {
         console.log(this.topOfPlatform)
-        if (this.movement.down || this.topOfPlatform) this.y -= (this.bottom * .50);  // jump 22% higher than bottom
+        if (this.movement.down || this.topOfPlatform) this.y -= (this.bottom * (.50 * this.jumpMod));  // jump 22% higher than bottom
         this.gravityEnabled = true;
     }
 
@@ -288,6 +300,21 @@ handleKeyDown(event) {
             GameEnv.backgroundSpeed = 0.4;
         }
     }
+    if (event.key === "s") {
+        this.canvas.style.filter = 'invert(1)';
+        this.jumpMod = 1.5;
+        this.dashTimer = setTimeout(() => {
+            // Stop the player's running functions
+            clearTimeout(this.dashTimer);
+            this.dashTimer = null;
+
+            // Start cooldown timer
+            this.cooldownTimer = setTimeout(() => {
+                clearTimeout(this.cooldownTimer);
+                this.cooldownTimer = null;
+            }, 4000);
+        }, 1000);
+    }
 }
 
 // Event listener key up
@@ -308,6 +335,10 @@ handleKeyUp(event) {
         this.setAnimation(key);  
         // player idle
         this.isIdle = true;     
+    }
+    if (event.key === "s") {
+            this.canvas.style.filter = 'invert(0)'; //revert to default coloring
+            this.jumpMod = 1;
     }
 }
 
