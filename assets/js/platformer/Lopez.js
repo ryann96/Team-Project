@@ -1,9 +1,9 @@
 import GameEnv from './GameEnv.js';
 import Character from './Character.js';
 import deathController from './Death.js';
-export class Player extends Character{
+export class Lopez extends Character{
     // constructors sets up Character object 
-    constructor(canvas, image, speedRatio, playerData){
+    constructor(canvas, image, speedRatio, playerData, speedLimit){
         super(canvas, 
             image, 
             speedRatio,
@@ -27,7 +27,12 @@ export class Player extends Character{
         document.addEventListener('keydown', this.keydownListener);
         document.addEventListener('keyup', this.keyupListener);
 
-        this.jumpMod = 1;
+        // Additional Property for Speed Limit
+        this.speedLimit = speedLimit;
+        this.currentSpeed = 0;
+        this.acceleration = 0.11; // Adjust based on preference
+        this.deceleration = 0.1; // Adjust based on preference 
+
         GameEnv.player = this;
     }
 
@@ -98,34 +103,50 @@ export class Player extends Character{
     
         return result;
     }
-
-    dashTimer;
-    cooldownTimer;
     
 
     // Player updates
     update() {
-        if (this.isAnimation("a") && (this.x > 0)) {
-            if (this.movement.left) this.x -= this.speed;  // Move to left
-            this.facingLeft = true;
+        // Adjust speed based on pressed keys
+        if (this.pressedKeys['a'] && this.movement.left) {
+            this.currentSpeed -= this.acceleration;
+        } else if (this.pressedKeys['d'] && this.movement.right) {
+            this.currentSpeed += this.acceleration;
+        } else {
+            // Decelerate when no movement keys are pressed
+            this.currentSpeed *= (1 - this.deceleration);
         }
-        if (this.isAnimation("d")) {
-            if (this.movement.right) this.x += this.speed;  // Move to right
-            this.facingLeft = false;
+
+        // Apply speed limit
+        if (Math.abs(this.currentSpeed) > this.speedLimit) {
+            this.currentSpeed = this.currentSpeed > 0 ? this.speedLimit : -this.speedLimit;
         }
-        if (this.isGravityAnimation("w")) {
-            console.log(this.topOfPlatform)
-            if (this.movement.down || this.topOfPlatform) this.y -= (this.bottom * (.50 * this.jumpMod));  // jump 22% higher than bottom
-            this.gravityEnabled = true;
-        }
-        if (this.isAnimation("s")) {
-            if (this.movement) {  // Check if movement is allowed
-                if(this.dashTimer) {
-                    const moveSpeed = this.speed * 2;
-                    this.x += this.facingLeft ? -moveSpeed : moveSpeed;
-                };
+
+        // Update player position based on speed
+        this.x += this.currentSpeed;
+
+        // Check for speed threshold to change sprite sheet rows
+        const walkingSpeedThreshold = 1; // Walking speed threshold
+        const runningSpeedThreshold = 5; // Running speed threshold
+
+        if (Math.abs(this.currentSpeed) >= runningSpeedThreshold) {
+            // Change sprite sheet row for running
+            if (this.currentSpeed > 0) {
+            this.setFrameY(this.playerData.runningRight.row);
+            } else {
+                this.setFrameY(this.playerData.runningLeft.row);
             }
-        }
+        } else if (Math.abs(this.currentSpeed) >= walkingSpeedThreshold) {
+            // Change sprite sheet row for walking
+            if (this.currentSpeed > 0) {
+                this.setFrameY(this.playerData.d.row);
+            } else {
+                this.setFrameY(this.playerData.a.row);
+            }
+            } else {
+            // Revert to normal animation if speed is below the walking threshold
+            this.setFrameY(this.playerData.idle.row);
+            }
 
         // Perform super update actions
         super.update();
@@ -269,10 +290,6 @@ handleKeyUp(event) {
         // player idle
         this.isIdle = true;     
     }
-    if (event.key === "s") {
-        this.canvas.style.filter = 'invert(0)'; //revert to default coloring
-        this.jumpMod = 1;
-}
 }
 
     // Override destroy() method from GameObject to remove event listeners
@@ -287,4 +304,4 @@ handleKeyUp(event) {
 }
 
 
-export default Player;
+export default Lopez;

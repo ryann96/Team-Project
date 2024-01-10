@@ -131,6 +131,7 @@ permalink: /mariogame
   },
   players: {
     mario: {
+      type: 0,
       src: "/images/platformer/sprites/mario.png",
       width: 256,
       height: 256,
@@ -142,9 +143,22 @@ permalink: /mariogame
       d: { row: 2, frames: 7, idleFrame: { column: 7, frames: 0 } }
     },
     monkey: {
-      src: "/images/platformer/sprites/lopezanimation.png",
-      width: 46,
-      height: 52.5,
+      type: 0,
+      src: "/images/platformer/sprites/monkey.png",
+      width: 40,
+      height: 40,
+      w: { row: 9, frames: 15 },
+      wa: { row: 9, frames: 15 },
+      wd: { row: 9, frames: 15 },
+      a: { row: 1, frames: 15, idleFrame: { column: 7, frames: 0 } },
+      s: { row: 12, frames: 15 },
+      d: { row: 0, frames: 15, idleFrame: { column: 7, frames: 0 } }
+    },
+    lopez: {
+          type: 1,
+          src: "/images/platformer/sprites/lopezanimation.png", // Modify this to match your file path
+          width: 46,
+          height: 52.5,
           idle: { row: 6, frames: 1, idleFrame: {column: 1, frames: 0} },
           a: { row: 1, frames: 4, idleFrame: { column: 1, frames: 0 } }, // Right Movement
           d: { row: 2, frames: 4, idleFrame: { column: 1, frames: 0 } }, // Left Movement 
@@ -470,6 +484,17 @@ document.getElementById('leaderboardButton').addEventListener('click', showLeade
       platform: assets.platforms.alien, 
       player: assets.players.monkey, 
       callback: testerCallBack 
+    });
+    new GameLevel( {tag: "lopez", 
+      background: assets.backgrounds.hills,
+      background2: assets.backgrounds.mountains,
+      platform: assets.platforms.grass, 
+      platformO: assets.platformO.grass, 
+      player: assets.players.lopez, 
+      enemy: assets.enemies.goomba, 
+      tube: assets.obstacles.tube, 
+      callback: testerCallBack, 
+      thing: assets.thing.coin, 
     });
     // Game Over screen
     new GameLevel( {tag: "end", 
