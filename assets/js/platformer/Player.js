@@ -248,6 +248,20 @@ handleKeyDown(event) {
             GameEnv.backgroundSpeed = 0.4;
         }
     }
+    if (event.key === "s") {
+        this.canvas.style.filter = 'invert(1)';
+        this.jumpMod = 1.5;
+        this.dashTimer = setTimeout(() => {
+            // Stop the player's running functions
+            clearTimeout(this.dashTimer);
+            this.dashTimer = null;
+            // Start cooldown timer
+            this.cooldownTimer = setTimeout(() => {
+                clearTimeout(this.cooldownTimer);
+                this.cooldownTimer = null;
+            }, 4000);
+        }, 1000);
+    }
 }
 
 // Event listener key up
